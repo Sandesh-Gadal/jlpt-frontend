@@ -1,0 +1,18 @@
+export const theme = {
+  bg:           '#0A0F1E',
+  bgCard:       '#0F1629',
+  bgInput:      '#141B2D',
+  border:       '#1E2A45',
+  borderFocus:  '#3B6FE8',
+  primary:      '#3B6FE8',
+  primaryHover: '#2D5FD4',
+  primaryGlow:  'rgba(59,111,232,0.25)',
+  accent:       '#F59E0B',
+  sakura:       '#FF6B9D',
+  textPrimary:  '#F0F4FF',
+  textSecondary:'#8896B3',
+  textMuted:    '#3D4F6E',
+  success:      '#10B981',
+  error:        '#EF4444',
+  errorBg:      'rgba(239,68,68,0.08)',
+} as const;

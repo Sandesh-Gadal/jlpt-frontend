@@ -1,0 +1,55 @@
+import type { CourseDetailData } from '@/types/lesson';
+
+export const COURSE_DETAIL: CourseDetailData = {
+  id:          'course-n3-grammar-001',
+  title:       'N3 Grammar Essentials',
+  description: 'Master intermediate Japanese grammar patterns for JLPT N3',
+  longDescription: 'This comprehensive course covers all essential grammar patterns required for JLPT N3 certification. Through 15 carefully structured lessons, you will learn conditional forms, causative and passive constructions, compound sentences, and nuanced expressions used in everyday Japanese conversation and writing.',
+  level:       'N3',
+  category:    'Grammar',
+  totalLessons: 15,
+  completedLessons: 8,
+  totalHours:  6,
+  xpReward:    300,
+  enrolled:    true,
+  rating:      4.8,
+  reviewCount: 124,
+  icon:        '文',
+  gradientFrom: '#1a2a50',
+  gradientTo:   '#2a3e7a',
+  skills: [
+    'Conditional forms (ば・たら・なら・と)',
+    'Causative & passive voice',
+    'Compound sentences with のに・ので・から',
+    'Expressing contrast with が・けど・しかし',
+    'Potential and volitional forms',
+    'Giving & receiving verbs (あげる・もらう・くれる)',
+  ],
+  lessons: [
+    { id: 'l1',  number: 1,  title: 'Introduction to N3 Grammar',          duration: 20, status: 'completed', xp: 20 },
+    { id: 'l2',  number: 2,  title: 'て-form Review & Extensions',          duration: 25, status: 'completed', xp: 20 },
+    { id: 'l3',  number: 3,  title: 'Conditional: ～たら',                  duration: 30, status: 'completed', xp: 25 },
+    { id: 'l4',  number: 4,  title: 'Conditional: ～ば & ～なら',            duration: 30, status: 'completed', xp: 25 },
+    { id: 'l5',  number: 5,  title: 'Conditional: ～と (natural result)',    duration: 25, status: 'completed', xp: 20 },
+    { id: 'l6',  number: 6,  title: 'Causative Form: ～させる',             duration: 35, status: 'completed', xp: 30 },
+    { id: 'l7',  number: 7,  title: 'Passive Form: ～られる',               duration: 35, status: 'completed', xp: 30 },
+    { id: 'l8',  number: 8,  title: 'Conditional Forms — ば・たら・なら',   duration: 40, status: 'current',   xp: 35 },
+    { id: 'l9',  number: 9,  title: 'Expressing Reason: ので・から・ため',   duration: 30, status: 'locked',    xp: 25 },
+    { id: 'l10', number: 10, title: 'Contrast: が・けど・のに・しかし',      duration: 35, status: 'locked',    xp: 30 },
+    { id: 'l11', number: 11, title: 'Giving & Receiving Verbs',             duration: 30, status: 'locked',    xp: 25 },
+    { id: 'l12', number: 12, title: 'Potential Form Deep Dive',             duration: 35, status: 'locked',    xp: 30 },
+    { id: 'l13', number: 13, title: 'Volitional Form: ～よう・～ましょう',   duration: 25, status: 'locked',    xp: 20 },
+    { id: 'l14', number: 14, title: 'Complex Sentence Patterns',            duration: 40, status: 'locked',    xp: 35 },
+    { id: 'l15', number: 15, title: 'N3 Grammar Review & Mock Questions',   duration: 60, status: 'locked',    xp: 50 },
+  ],
+  reviews: [
+    { id: 'r1', name: 'Tanaka Yuki',   avatar: 'T', rating: 5, date: '2 days ago',   level: 'N3', text: 'Absolutely the best grammar course I have taken. The conditional forms lesson finally made everything click for me. The furigana examples are incredibly helpful.' },
+    { id: 'r2', name: 'Maria Santos',  avatar: 'M', rating: 5, date: '1 week ago',   level: 'N4', text: 'Clear explanations and great example sentences. I went from barely understanding N4 grammar to feeling confident about N3 after just a few lessons.' },
+    { id: 'r3', name: 'James Chen',    avatar: 'J', rating: 4, date: '2 weeks ago',  level: 'N3', text: 'Very well structured. I especially liked the grammar pattern breakdowns. Would love to see more listening practice exercises added.' },
+    { id: 'r4', name: 'Aiko Müller',   avatar: 'A', rating: 5, date: '3 weeks ago',  level: 'N2', text: 'Even as an N2 student I found the causative/passive lessons useful for review. The mnemonics really help with retention.' },
+  ],
+};
+
+export const MOCK_COURSE_DETAIL_MAP: Record<string, CourseDetailData> = {
+  'course-n3-grammar-001': COURSE_DETAIL,
+};
