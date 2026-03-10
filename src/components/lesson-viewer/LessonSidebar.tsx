@@ -12,7 +12,9 @@ interface LessonSidebarProps {
 }
 
 export default function LessonSidebar({ course, activeLessonId }: LessonSidebarProps) {
-  const pct = Math.round((course.completedLessons / course.totalLessons) * 100);
+  const completedLessons = course.completedLessons ?? 0;
+  const totalLessons = course.totalLessons ?? 1;
+  const pct = Math.round((completedLessons / totalLessons) * 100);
 
   return (
     <div className="lv-sidebar">
@@ -23,7 +25,7 @@ export default function LessonSidebar({ course, activeLessonId }: LessonSidebarP
         </Link>
         <div className="lv-course-title">{course.title}</div>
         <div className="lv-course-progress">
-          {course.completedLessons} / {course.totalLessons} lessons · {pct}%
+          {completedLessons} / {totalLessons} lessons · {pct}%
         </div>
         <div className="lv-progress-track">
           <div className="lv-progress-fill" style={{ width: `${pct}%` }} />

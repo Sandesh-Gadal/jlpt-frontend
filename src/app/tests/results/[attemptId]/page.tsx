@@ -5,10 +5,14 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import AppShell from '@/components/dashboard/Layout/AppShell';
+import { useUserData } from '@/hooks/useUserData';
 import { MOCK_TEST_SET, MOCK_QUESTIONS, MOCK_ATTEMPT_ANSWERS } from '@/data/testData';
 
 export default function TestResultsPage() {
   const [showReview, setShowReview] = useState(false);
+  
+  // Use the shared hook for user data
+  const { fullName, jlptLevel, userInitial } = useUserData();
 
   const testSet = MOCK_TEST_SET;
   const answers = MOCK_ATTEMPT_ANSWERS;
@@ -25,11 +29,11 @@ export default function TestResultsPage() {
 
   return (
     <AppShell
-      userName="Keiko Tanaka"
-      userInitial="K"
-      userLevel="N3"
+      userName={fullName}
+      userInitial={userInitial}
+      userLevel={jlptLevel}
       topBarSubText={testSet.title}
-      notifCount={3}
+      notifCount={0}
     >
       <div className="tr-shell">
 

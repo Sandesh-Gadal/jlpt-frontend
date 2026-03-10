@@ -52,10 +52,10 @@
   background: var(--highlight);
 }
 .level-tab.active {
-  background: var(--accent-primary);
-  border-color: var(--accent-primary);
+  background: var(--accent);
+  border-color: var(--accent);
   color: #fff;
-  box-shadow: 0 2px 8px var(--glow-green);
+  box-shadow: 0 2px 8px rgba(45, 45, 45, 0.3);
 }
 
 /* ── Category Chips ── */

@@ -8,14 +8,17 @@ import type { CourseDetailData } from '@/types/lesson';
 
 export default function LessonList({ course }: { course: CourseDetailData }) {
   const [showAll, setShowAll] = useState(false);
-  const visible = showAll ? course.lessons : course.lessons.slice(0, 8);
+  const completedLessons = course.completedLessons ?? 0;
+  const totalLessons = course.totalLessons ?? 0;
+  const lessons = course.lessons ?? [];
+  const visible = showAll ? lessons : lessons.slice(0, 8);
 
   return (
     <div>
       <div className="cd-section-title">
         📖 Lessons
         <span style={{ fontSize: 12, color: 'var(--text-muted)', fontFamily: 'var(--font-body)', fontWeight: 400 }}>
-          {course.completedLessons} / {course.totalLessons} completed
+          {completedLessons} / {totalLessons} completed
         </span>
       </div>
 
@@ -55,7 +58,7 @@ export default function LessonList({ course }: { course: CourseDetailData }) {
         })}
       </div>
 
-      {course.lessons.length > 8 && (
+      {lessons.length > 8 && (
         <button
           onClick={() => setShowAll((p) => !p)}
           style={{
@@ -75,7 +78,7 @@ export default function LessonList({ course }: { course: CourseDetailData }) {
         >
           {showAll
             ? '▲ Show less'
-            : `▼ Show all ${course.lessons.length} lessons`}
+            : `▼ Show all ${lessons.length} lessons`}
         </button>
       )}
     </div>

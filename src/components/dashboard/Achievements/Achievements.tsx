@@ -2,7 +2,7 @@
 
 // ─────────────────────────────────────────────────────────────────
 // src/components/dashboard/Achievements/Achievements.tsx
-// Horizontal scroll of badge circles — earned vs locked
+// Minimalistic badge display
 // ─────────────────────────────────────────────────────────────────
 
 import React from 'react';
@@ -18,15 +18,15 @@ export default function Achievements({ achievements }: AchievementsProps) {
   return (
     <div className="achievements-card">
       {/* Header */}
-      <div className="panel-header" style={{ marginBottom: 4 }}>
+      <div className="panel-header" style={{ marginBottom: 8 }}>
         <span className="panel-title">Achievements</span>
         <span className="achievements-count">
           {earnedCount} / {achievements.length} earned
         </span>
       </div>
 
-      {/* Badges scroll */}
-      <div className="achievements-scroll">
+      {/* Grid */}
+      <div className="achievements-grid">
         {achievements.map((badge) => (
           <BadgeItem key={badge.id} badge={badge} />
         ))}
@@ -35,7 +35,7 @@ export default function Achievements({ achievements }: AchievementsProps) {
   );
 }
 
-/* ── Single badge ── */
+/* Single badge */
 function BadgeItem({ badge }: { badge: Achievement }) {
   return (
     <div
@@ -52,3 +52,4 @@ function BadgeItem({ badge }: { badge: Achievement }) {
     </div>
   );
 }
+

@@ -6,6 +6,7 @@ import React, { useState, useMemo } from 'react';
 import AppShell      from '@/components/dashboard/Layout/AppShell';
 import FlashcardGrid from '@/components/flashcards/FlashcardGrid';
 import StudySession  from '@/components/flashcards/StudySession';
+import { useUserData } from '@/hooks/useUserData';
 import { MOCK_FLASHCARDS, MOCK_DECK_STATS } from '@/data/flashcardData';
 import type { Flashcard, SrsRating } from '@/types/flashcard';
 
@@ -19,6 +20,9 @@ export default function FlashcardPage() {
   const [studyCards, setStudyCards] = useState<Flashcard[]>([]);
   const [cards,      setCards]      = useState(MOCK_FLASHCARDS);
   const stats = MOCK_DECK_STATS;
+  
+  // Use the shared hook for user data
+  const { fullName, jlptLevel, userInitial } = useUserData();
 
   const filtered = useMemo(() => {
     return cards.filter((c) => {
@@ -76,11 +80,11 @@ export default function FlashcardPage() {
       )}
 
       <AppShell
-        userName="Keiko Tanaka"
-        userInitial="K"
-        userLevel="N3"
+        userName={fullName}
+        userInitial={userInitial}
+        userLevel={jlptLevel}
         topBarSubText="Spaced repetition flashcard practice"
-        notifCount={3}
+        notifCount={0}
       >
         <div className="dashboard-content" style={{ padding: 0 }}>
 

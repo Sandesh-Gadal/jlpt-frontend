@@ -2,7 +2,7 @@
 
 // ─────────────────────────────────────────────────────────────────
 // src/components/dashboard/RecommendedCourses/RecommendedCourses.tsx
-// Horizontal-scroll row of course mini-cards
+// Minimalistic grid layout for recommended courses
 // ─────────────────────────────────────────────────────────────────
 
 import React from 'react';
@@ -18,13 +18,13 @@ export default function RecommendedCourses({ courses }: RecommendedCoursesProps)
     <div className="panel-card">
       {/* Header */}
       <div className="panel-header">
-        <span className="panel-title">Recommended for You</span>
+        <span className="panel-title">Recommended</span>
         <Link href="/courses" className="see-all-btn">See all →</Link>
       </div>
 
-      {/* Horizontal scroll */}
-      <div className="course-scroll">
-        {courses.map((course) => (
+      {/* Grid */}
+      <div className="course-grid">
+        {courses.slice(0, 4).map((course) => (
           <CourseCard key={course.id} course={course} />
         ))}
       </div>
@@ -32,7 +32,7 @@ export default function RecommendedCourses({ courses }: RecommendedCoursesProps)
   );
 }
 
-/* ── Single mini card ── */
+/* Single course card */
 function CourseCard({ course }: { course: RecommendedCourse }) {
   return (
     <Link href={`/courses/${course.id}`} className="course-mini-card">
@@ -58,15 +58,16 @@ function CourseCard({ course }: { course: RecommendedCourse }) {
         <div className="mini-title">{course.title}</div>
         <div className="mini-meta">
           <span className="mini-duration">
-            <svg width="9" height="9" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+            <svg width="10" height="10" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
               <circle cx="12" cy="12" r="10"/>
               <path d="M12 6v6l4 2"/>
             </svg>
             {course.duration}
           </span>
-          <span className="mini-xp">⭐ {course.xpReward} XP</span>
+          <span className="mini-xp">+{course.xpReward} XP</span>
         </div>
       </div>
     </Link>
   );
 }
+

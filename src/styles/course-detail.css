@@ -166,6 +166,17 @@
 .cd-enroll-btn.continue:hover {
   background: var(--highlight);
 }
+.cd-enroll-btn.locked {
+  background: var(--bg-elevated);
+  color: var(--text-muted);
+  border: 1.5px solid var(--border);
+  box-shadow: none;
+  cursor: not-allowed;
+}
+.cd-enroll-btn.locked:hover {
+  background: var(--bg-elevated);
+  transform: none;
+}
 
 /* ── Progress bar in hero ── */
 .cd-progress-wrap {

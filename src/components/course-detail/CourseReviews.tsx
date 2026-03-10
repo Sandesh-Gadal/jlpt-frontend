@@ -4,17 +4,21 @@ import React from 'react';
 import type { CourseDetailData } from '@/types/lesson';
 
 export default function CourseReviews({ course }: { course: CourseDetailData }) {
+  const reviews = course.reviews ?? [];
+  const rating = course.rating ?? 0;
+  const reviewCount = course.reviewCount ?? 0;
+
   return (
     <div>
       <div className="cd-section-title">
         💬 Reviews
         <span style={{ fontSize: 12, color: 'var(--text-muted)', fontFamily: 'var(--font-body)', fontWeight: 400 }}>
-          {course.rating} ★ · {course.reviewCount} ratings
+          {rating} ★ · {reviewCount} ratings
         </span>
       </div>
 
       <div className="cd-reviews-list">
-        {course.reviews.map((r, i) => (
+        {reviews.map((r, i) => (
           <div
             key={r.id}
             className="cd-review-card"

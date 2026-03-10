@@ -2,7 +2,7 @@
 
 // ─────────────────────────────────────────────────────────────────
 // src/components/dashboard/ContinueCard/ContinueCard.tsx
-// "Continue Learning" banner — current in-progress course
+// Minimalistic "Continue Learning" card
 // ─────────────────────────────────────────────────────────────────
 
 import React from 'react';
@@ -19,15 +19,15 @@ export default function ContinueCard({ course }: ContinueCardProps) {
   return (
     <div className="continue-card">
 
-      {/* ── Thumbnail ── */}
+      {/* Thumbnail */}
       <div className="course-thumbnail">
         <span className="thumb-jp">{course.thumbnailJp}</span>
         <span className="thumb-level-badge">{course.level}</span>
       </div>
 
-      {/* ── Info ── */}
+      {/* Info */}
       <div className="continue-info">
-        <span className="continue-tag">▶ Continue Learning</span>
+        <span className="continue-tag">Continue Learning</span>
         <div className="continue-title">{course.courseName}</div>
         <div className="continue-lesson">{course.lessonTitle}</div>
 
@@ -39,16 +39,15 @@ export default function ContinueCard({ course }: ContinueCardProps) {
             />
           </div>
           <span className="progress-label">
-            {course.lessonNumber} / {course.totalLessons} lessons
+            {course.lessonNumber}/{course.totalLessons}
           </span>
         </div>
       </div>
 
-      {/* ── Right CTA ── */}
+      {/* Right CTA */}
       <div className="continue-right">
         <div className="time-remaining">
-          Est. remaining
-          <strong>~{course.estimatedMinsRemaining} min</strong>
+          ~{course.estimatedMinsRemaining} min left
         </div>
 
         <Link
@@ -57,7 +56,7 @@ export default function ContinueCard({ course }: ContinueCardProps) {
         >
           Continue
           <svg
-            width="13" height="13"
+            width="12" height="12"
             fill="none" stroke="currentColor" strokeWidth="2.5"
             viewBox="0 0 24 24"
           >
@@ -69,3 +68,4 @@ export default function ContinueCard({ course }: ContinueCardProps) {
     </div>
   );
 }
+

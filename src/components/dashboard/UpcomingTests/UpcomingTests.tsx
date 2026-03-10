@@ -2,7 +2,7 @@
 
 // ─────────────────────────────────────────────────────────────────
 // src/components/dashboard/UpcomingTests/UpcomingTests.tsx
-// List of upcoming practice tests with date, duration, start button
+// Minimalistic list of upcoming tests
 // ─────────────────────────────────────────────────────────────────
 
 import React from 'react';
@@ -24,7 +24,7 @@ export default function UpcomingTests({ tests }: UpcomingTestsProps) {
 
       {/* List */}
       <div className="tests-list">
-        {tests.map((test) => (
+        {tests.slice(0, 4).map((test) => (
           <TestItem key={test.id} test={test} />
         ))}
       </div>
@@ -32,16 +32,11 @@ export default function UpcomingTests({ tests }: UpcomingTestsProps) {
   );
 }
 
-/* ── Single test row ── */
+/* Single test row */
 function TestItem({ test }: { test: UpcomingTest }) {
   return (
     <div
-      className="test-item"
-      style={{
-        borderLeftColor: test.urgent
-          ? 'var(--accent-primary)'
-          : 'var(--accent-tertiary)',
-      }}
+      className={`test-item${test.urgent ? ' urgent' : ''}`}
     >
       <div className="test-info">
         <div className="test-name">{test.name}</div>
@@ -52,7 +47,7 @@ function TestItem({ test }: { test: UpcomingTest }) {
           {test.urgent && (
             <>
               <span className="test-meta-dot" />
-              <span className="test-ready-tag">Ready!</span>
+              <span className="test-ready-tag">Ready</span>
             </>
           )}
         </div>
@@ -64,3 +59,4 @@ function TestItem({ test }: { test: UpcomingTest }) {
     </div>
   );
 }
+

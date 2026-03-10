@@ -87,22 +87,25 @@ export interface CourseDetailData {
   id:          string;
   title:       string;
   description: string;
-  longDescription: string;
+  longDescription?: string;
   level:       string;
   category:    string;
   totalLessons: number;
-  completedLessons: number;
-  totalHours:  number;
-  xpReward:    number;
-  enrolled:    boolean;
-  rating:      number;
-  reviewCount: number;
-  icon:        string;
-  gradientFrom: string;
-  gradientTo:   string;
-  skills:      string[];
+  completedLessons?: number;
+  totalHours?:  number;
+  xpReward?:    number;
+  enrolled?:    boolean;
+  rating?:      number;
+  reviewCount?: number;
+  icon?:        string;
+  gradientFrom?: string;
+  gradientTo?:   string;
+  skills?:      string[];
   lessons:     CourseLesson[];
-  reviews:     Review[];
+  reviews?:     Review[];
+  thumbnail_url?: string | null;
+  is_locked?: boolean;
+  required_plan?: string | null;
 }
 
 export interface Review {

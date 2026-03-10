@@ -15,6 +15,10 @@ export interface Course {
   progress?:   number;   // lessons completed
   icon:        string;
   description: string;
+  // Additional fields from backend API
+  thumbnail_url?: string | null;
+  is_locked?: boolean;
+  preview_lessons?: number | null;
 }
 
 export interface LevelMeta {

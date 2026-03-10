@@ -14,9 +14,10 @@ interface LessonNavProps {
 }
 
 export default function LessonNav({ course, currentLessonId, quizCompleted }: LessonNavProps) {
-  const idx  = course.lessons.findIndex((l) => l.id === currentLessonId);
-  const prev = idx > 0 ? course.lessons[idx - 1] : null;
-  const next = idx < course.lessons.length - 1 ? course.lessons[idx + 1] : null;
+  const lessons = course.lessons ?? [];
+  const idx  = lessons.findIndex((l) => l.id === currentLessonId);
+  const prev = idx > 0 ? lessons[idx - 1] : null;
+  const next = idx < lessons.length - 1 ? lessons[idx + 1] : null;
   const isNextLocked = next?.status === 'locked' && !quizCompleted;
 
   return (
@@ -32,7 +33,7 @@ export default function LessonNav({ course, currentLessonId, quizCompleted }: Le
 
       {/* Progress indicator */}
       <div className="lv-nav-progress">
-        Lesson {idx + 1} of {course.lessons.length}
+        Lesson {idx + 1} of {lessons.length}
       </div>
 
       {/* Next */}

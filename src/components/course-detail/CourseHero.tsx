@@ -14,22 +14,30 @@ interface CourseHeroProps {
 }
 
 export default function CourseHero({ course }: CourseHeroProps) {
-  const pct    = Math.round((course.completedLessons / course.totalLessons) * 100);
+  const completedLessons = course.completedLessons ?? 0;
+  const totalLessons = course.totalLessons ?? 1;
+  const pct    = Math.round((completedLessons / totalLessons) * 100);
   const badge  = LEVEL_COLORS[course.level] ?? '#6EAA54';
-  const currentLesson = course.lessons.find((l) => l.status === 'current');
+  const currentLesson = course.lessons?.find((l) => l.status === 'current');
+  const rating = course.rating ?? 0;
+  const reviewCount = course.reviewCount ?? 0;
+  const totalHours = course.totalHours ?? 0;
+  const xpReward = course.xpReward ?? 0;
+  const gradientFrom = course.gradientFrom ?? '#1a2a50';
+  const gradientTo = course.gradientTo ?? '#2a3e7a';
 
   return (
     <div className="cd-hero">
       {/* BG gradient */}
       <div
         className="cd-hero-bg"
-        style={{ background: `linear-gradient(135deg, ${course.gradientFrom}, ${course.gradientTo})` }}
+        style={{ background: `linear-gradient(135deg, ${gradientFrom}, ${gradientTo})` }}
       />
 
       {/* Thumbnail */}
       <div
         className="cd-hero-thumb"
-        style={{ background: `linear-gradient(145deg, ${course.gradientFrom}, ${course.gradientTo})` }}
+        style={{ background: `linear-gradient(145deg, ${gradientFrom}, ${gradientTo})` }}
       >
         {course.icon}
       </div>
@@ -44,24 +52,37 @@ export default function CourseHero({ course }: CourseHeroProps) {
         <div className="cd-hero-desc">{course.description}</div>
         <div className="cd-hero-meta">
           <span className="cd-meta-item">
-            <span className="cd-stars">{'★'.repeat(Math.round(course.rating))}</span>
-            <strong>{course.rating}</strong>
-            <span>({course.reviewCount} reviews)</span>
+            <span className="cd-stars">{'★'.repeat(Math.round(rating))}</span>
+            <strong>{rating}</strong>
+            <span>({reviewCount} reviews)</span>
           </span>
-          <span className="cd-meta-item">📚 <strong>{course.totalLessons}</strong> lessons</span>
-          <span className="cd-meta-item">⏱ <strong>{course.totalHours}h</strong> total</span>
-          <span className="cd-meta-item">🌟 <strong>{course.xpReward} XP</strong></span>
+          <span className="cd-meta-item">📚 <strong>{totalLessons}</strong> lessons</span>
+          <span className="cd-meta-item">⏱ <strong>{totalHours}h</strong> total</span>
+          <span className="cd-meta-item">🌟 <strong>{xpReward} XP</strong></span>
         </div>
       </div>
 
       {/* Right CTA */}
       <div className="cd-hero-right">
-        <div className="cd-xp-pill">🌟 {course.xpReward} XP reward</div>
+        <div className="cd-xp-pill">🌟 {xpReward} XP reward</div>
 
-        {course.enrolled ? (
+        {/* Handle locked, enrolled, and available states */}
+        {course.is_locked ? (
           <>
             <div className="cd-progress-wrap">
-              <div className="cd-progress-label">{pct}% complete · {course.completedLessons}/{course.totalLessons} lessons</div>
+              <div className="cd-progress-label">0% complete · 0/{totalLessons} lessons</div>
+              <div className="cd-progress-track">
+                <div className="cd-progress-fill" style={{ width: '0%' }} />
+              </div>
+            </div>
+            <button className="cd-enroll-btn locked">
+              🔒 Upgrade to {course.required_plan || 'Premium'} to Access
+            </button>
+          </>
+        ) : course.enrolled ? (
+          <>
+            <div className="cd-progress-wrap">
+              <div className="cd-progress-label">{pct}% complete · {completedLessons}/{totalLessons} lessons</div>
               <div className="cd-progress-track">
                 <div className="cd-progress-fill" style={{ width: `${pct}%` }} />
               </div>
