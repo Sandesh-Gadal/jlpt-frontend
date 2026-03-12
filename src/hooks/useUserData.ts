@@ -1,7 +1,10 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { authApi, getAuthToken, getUserInitials, formatJlptLevel } from '@/lib/api';
+import { useRouter } from 'next/navigation';
+import { authApi } from '@/lib/api/auth';
+import { getAuthToken } from '@/lib/api/request';
+import { getUserInitials, formatJlptLevel } from '@/lib/api/dashboard';
 
 interface UserData {
   fullName: string;
@@ -19,65 +22,77 @@ const DEFAULT_USER: UserData = {
   isAuthenticated: false,
 };
 
-/**
- * Custom hook to fetch and manage user data for AppShell
- * Returns dynamic user data (name, initials, JLPT level) from auth API
- */
 export function useUserData() {
+  const router = useRouter();
   const [userData, setUserData] = useState<UserData>(DEFAULT_USER);
 
   useEffect(() => {
+    let active = true;
+
     const fetchUserData = async () => {
       const token = getAuthToken();
-      
+
       if (!token) {
+        if (!active) return;
         setUserData({
           ...DEFAULT_USER,
           loading: false,
           isAuthenticated: false,
         });
+        router.push('/auth/login');
         return;
       }
 
       try {
         const response = await authApi.me(token);
-        
-        if (response.data) {
-          const fullName = response.data.full_name || 'Student';
-          // Note: jlpt_target_level may not be available in /auth/me response
-          // It will default to N5, but could be enhanced to fetch from dashboard API
-          const jlptLevel = 'N5'; // Default - can be enhanced later
-          
-          setUserData({
-            fullName,
-            jlptLevel: formatJlptLevel(jlptLevel),
-            userInitial: getUserInitials(fullName),
-            loading: false,
-            isAuthenticated: true,
-          });
-        } else {
-          // Auth error - use defaults
+
+        if (!active) return;
+
+        if (response.error || !response.data?.user) {
           setUserData({
             ...DEFAULT_USER,
             loading: false,
             isAuthenticated: false,
           });
+          router.push('/auth/login');
+          return;
         }
+
+        const user = response.data.user;
+
+        const fullName = user.full_name || 'Student';
+        const jlptLevel = formatJlptLevel(user.jlpt_target_level || 'N5');
+
+        setUserData({
+          fullName,
+          jlptLevel,
+          userInitial: getUserInitials(fullName),
+          loading: false,
+          isAuthenticated: true,
+        });
       } catch (err) {
         console.error('Failed to fetch user data:', err);
+
+        if (!active) return;
+
         setUserData({
           ...DEFAULT_USER,
           loading: false,
           isAuthenticated: false,
         });
+
+        router.push('/auth/login');
       }
     };
 
     fetchUserData();
-  }, []);
+
+    return () => {
+      active = false;
+    };
+  }, [router]);
 
   return userData;
 }
 
 export default useUserData;
-

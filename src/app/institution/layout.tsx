@@ -1,21 +1,20 @@
 // ─────────────────────────────────────────────────────────────────
-// src/app/dashboard/layout.tsx
-// Dashboard layout using IndividualLayout with common sidebar and topbar
+// src/app/institution/layout.tsx
+// Institution layout using InstitutionLayout with common sidebar and topbar
 // Navigation menu content passed as children
 // ─────────────────────────────────────────────────────────────────
 
-import IndividualLayout from '@/components/layout/IndividualLayout';
-import '@/styles/dashboard.css';
-import React from 'react';
+import InstitutionLayout from '@/components/layout/InstitutionLayout';
 
-export default function DashboardLayout({
+export default function InstitutionRootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <IndividualLayout>
+    <InstitutionLayout>
       {children}
-    </IndividualLayout>
+    </InstitutionLayout>
   );
 }
+

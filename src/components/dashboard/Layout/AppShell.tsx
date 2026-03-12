@@ -1,5 +1,4 @@
-'use client';
-
+"use client";
 // src/components/dashboard/Layout/AppShell.tsx
 // Minimalistic app shell with sidebar and topbar
 
@@ -41,8 +40,11 @@ const RectangleStackIcon = ({ className }: { className?: string }) => (
 
 const ChartBarIcon = ({ className }: { className?: string }) => (
   <svg className={className} width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125v6.75C7.5 20.125 1.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
-  </svg>
+<path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M3 13.125c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zm6.75-4.5c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25A1.125 1.125 0 019.75 19.875V8.625zm6.75-4.5c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"
+    />  </svg>
 );
 
 const TrophyIcon = ({ className }: { className?: string }) => (
@@ -72,7 +74,8 @@ const NavIcon = ({ icon, className }: { icon: string; className?: string }) => {
   return <>{iconMap[icon] || icon}</>;
 };
 
-const NAV_ITEMS: NavItem[] = [
+// Default navigation items for individual users
+const DEFAULT_NAV_ITEMS: NavItem[] = [
   { icon: 'home',     label: 'Home',      href: '/dashboard',  badge: null },
   { icon: 'courses',  label: 'Courses',   href: '/courses',    badge: '3'  },
   { icon: 'practice', label: 'Practice',  href: '/practice',  badge: null },
@@ -83,6 +86,7 @@ const NAV_ITEMS: NavItem[] = [
   { icon: 'profile',  label: 'Profile',   href: '/profile',    badge: null },
 ];
 
+// Bottom navigation items for mobile
 const BOTTOM_NAV_ITEMS: NavItem[] = [
   { icon: 'home',     label: 'Home',      href: '/dashboard',  badge: null },
   { icon: 'courses',  label: 'Courses',   href: '/courses',    badge: '3'  },
@@ -98,6 +102,7 @@ interface AppShellProps {
   userLevel:      string;
   topBarSubText?: string;
   notifCount?:    number;
+  navItems?:      NavItem[]; // Custom navigation items
 }
 
 export default function AppShell({
@@ -107,17 +112,20 @@ export default function AppShell({
   userLevel,
   topBarSubText,
   notifCount = 0,
+  navItems = DEFAULT_NAV_ITEMS,
 }: AppShellProps) {
   const pathname = usePathname();
-
+  
   const hour = new Date().getHours();
   const greeting =
     hour < 12 ? 'Good morning' :
     hour < 17 ? 'Good afternoon' :
     'Good evening';
 
-  const mainNav    = NAV_ITEMS.slice(0, 5);
-  const accountNav = NAV_ITEMS.slice(5);
+  // Use passed navItems or default
+  const displayNavItems = navItems || DEFAULT_NAV_ITEMS;
+  const mainNav    = displayNavItems.slice(0, 5);
+  const accountNav = displayNavItems.slice(5);
 
   return (
     <div className="app-shell">

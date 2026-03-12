@@ -229,7 +229,7 @@ export const dashboardApi = {
     }
 
     const data = response.data;
-
+    // console.log('Dashboard data received:', data);
     // Transform sparkline data
     const sparklineData = data.sparkline.map((entry) => entry.count);
 

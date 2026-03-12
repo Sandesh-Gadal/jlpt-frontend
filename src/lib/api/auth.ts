@@ -9,6 +9,26 @@ export interface AuthUser {
   id: string;
   email: string;
   full_name: string;
+  role?: string;
+  jlpt_target_level?: string | null;
+  email_verified?: boolean;
+  avatar_url?: string | null;
+  tenant?: {
+    id: string;
+    name: string;
+    tenant_type: string;
+    status: string;
+    plan?: {
+      id: string;
+      name: string;
+      plan_type: string;
+      features: unknown;
+    } | null;
+  };
+}
+
+export interface MeResponse {
+  user: AuthUser;
 }
 
 export interface LoginResponse {
@@ -62,7 +82,7 @@ export const authApi = {
    * GET /auth/me
    */
   me: (token: string) =>
-    request<AuthUser>('/auth/me', {
+    request<MeResponse>('/auth/me', {
       method: 'GET',
       headers: { Authorization: `Bearer ${token}` },
     }),

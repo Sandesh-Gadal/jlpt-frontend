@@ -94,14 +94,8 @@ export default function CourseCatalogPage() {
   };
 
   return (
-    <AppShell
-      userName={fullName}
-      userInitial={userInitial}
-      userLevel={jlptLevel}
-      topBarSubText="Browse and enroll in JLPT preparation courses"
-      notifCount={0}
-    >
-      
+   
+      <>
       {/* Sticky filters */}
       <FiltersBar
         activeLevel={activeLevel}
@@ -138,7 +132,7 @@ export default function CourseCatalogPage() {
           )}
         </div>
       </div>
-    </AppShell>
+    </>
   );
 }
 
