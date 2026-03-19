@@ -46,16 +46,13 @@ export default function DashboardPage() {
       setLoading(true);
       try {
         const data = await dashboardApi.get();
+        console.log('Dashboard data:', data);
+        
         if (data) {
           // Set user data from API         
           
           // Set stats
-          if (data.stats) {
-            setStats({
-              ...MOCK_USER_STATS,
-              ...data.stats,
-            } as UserStats);
-          }
+        setStats(data.stats);
           
           // Set in-progress courses
           if (data.inProgress && data.inProgress.length > 0) {

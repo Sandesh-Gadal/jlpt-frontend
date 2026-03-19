@@ -7,14 +7,14 @@ import { request, getAuthToken } from './request';
 
 // Backend response types
 export interface BackendXpStats {
-  current_xp: number;
-  level: number;
-  rank: string;
-  xp_to_next_rank: number;
-  daily_goal_xp: number;
-  daily_goal_done: boolean;
-  streak: number;
-  longest_streak: number;
+  total_xp: number;        // total XP
+  level: number;           // current level
+  rank?: string;          // current rank (if provided)
+  level_label: string;     // Level 1, Level 2, etc.
+  progress_pct: number;    // progress %
+  xp_to_next: number;      // XP needed for next level
+  streak: number;          // current streak
+  longest_streak: number;  // longest streak
 }
 
 export interface BackendCourseProgress {
@@ -122,6 +122,7 @@ export interface UpcomingTest {
 // Get auth headers
 function getAuthHeaders(): HeadersInit {
   const token = getAuthToken();
+  console.log('Auth token for dashboard request:', token);
   return token ? { Authorization: `Bearer ${token}` } : {};
 }
 
@@ -130,15 +131,15 @@ function transformXpStats(backend: BackendXpStats, sparkline: number[]): UserSta
   return {
     streak: backend.streak,
     longestStreak: backend.longest_streak,
-    totalXp: backend.current_xp,
-    xpToNextRank: backend.xp_to_next_rank,
-    dailyGoalDone: backend.daily_goal_done ? backend.daily_goal_xp : 0,
-    dailyGoalTotal: backend.daily_goal_xp,
-    dailyXpReward: 0, // Not provided by backend
-    avgScore: 0, // Not provided by backend
+    totalXp: backend.total_xp,          // use total_xp
+    xpToNextRank: backend.xp_to_next,   // use xp_to_next
+    dailyGoalDone: 0,                   // backend does not provide, set default 0
+    dailyGoalTotal: 0,                  // backend does not provide, set default 0
+    dailyXpReward: 0,                   // backend does not provide, set default 0
+    avgScore: 0,                        // backend does not provide, set default 0
     sparklineData: sparkline,
-    level: backend.level,
-    rank: backend.rank,
+    level: backend.level,               // backend level is correct
+    rank: backend.rank ?? '',           // backend does not provide rank, default empty
   };
 }
 
@@ -221,6 +222,7 @@ export const dashboardApi = {
     const response = await request<DashboardResponse>('/dashboard', {
       method: 'GET',
       headers: getAuthHeaders(),
+      
     });
 
     if (response.error || !response.data) {
@@ -232,6 +234,8 @@ export const dashboardApi = {
     // console.log('Dashboard data received:', data);
     // Transform sparkline data
     const sparklineData = data.sparkline.map((entry) => entry.count);
+const stats = transformXpStats(data.xp, sparklineData);
+console.log('Transformed stats:', stats);
 
     // Get user data from response
     const fullName = data.user.full_name || 'Student';

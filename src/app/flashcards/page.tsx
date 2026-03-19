@@ -79,13 +79,6 @@ export default function FlashcardPage() {
         />
       )}
 
-      <AppShell
-        userName={fullName}
-        userInitial={userInitial}
-        userLevel={jlptLevel}
-        topBarSubText="Spaced repetition flashcard practice"
-        notifCount={0}
-      >
         <div className="dashboard-content" style={{ padding: 0 }}>
 
           {/* Header */}
@@ -151,7 +144,7 @@ export default function FlashcardPage() {
           )}
 
         </div>
-      </AppShell>
+      
     </>
   );
 }
