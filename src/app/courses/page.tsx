@@ -30,14 +30,13 @@ export default function CourseCatalogPage() {
   // Fetch courses from API on mount
   useEffect(() => {
     const fetchCourses = async () => {
-      setLoading(true);
+      setLoading(false);
       try {
         const data = await coursesApi.list();
         if (data && data.length > 0) {
           setCourses(data);
         } else {
-          // Fallback to mock data if API returns empty
-          console.log('Using mock data - API returned empty');
+        
           setCourses(MOCK_COURSES as Course[]);
         }
       } catch (err) {
