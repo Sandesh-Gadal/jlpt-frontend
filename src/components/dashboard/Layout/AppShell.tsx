@@ -124,8 +124,8 @@ export default function AppShell({
 
   // Use passed navItems or default
   const displayNavItems = navItems || DEFAULT_NAV_ITEMS;
-  const mainNav    = displayNavItems.slice(0, 5);
-  const accountNav = displayNavItems.slice(5);
+  const mainNav    = displayNavItems.slice(0, 4);
+  const accountNav = displayNavItems.slice(4);
 
   return (
     <div className="app-shell">

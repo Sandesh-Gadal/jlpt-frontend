@@ -11,6 +11,6 @@ export { testsApi } from './tests';
 export { dashboardApi, getUserInitials, formatJlptLevel } from './dashboard';
 
 // Re-export request utilities
-export { request, getAuthToken, setAuthToken, removeAuthToken } from './request';
+export { request } from './request';
 export type { ApiResponse } from './request';
 

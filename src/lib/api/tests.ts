@@ -3,7 +3,7 @@
  * Handles test-related API calls
  */
 
-import { request, getAuthToken } from './request';
+import { request } from './request';
 
 // Backend response types
 export interface BackendTestSet {
@@ -162,10 +162,10 @@ export interface TestAttempt {
 }
 
 // Get auth headers
-function getAuthHeaders(): HeadersInit {
-  const token = getAuthToken();
-  return token ? { Authorization: `Bearer ${token}` } : {};
-}
+// function getAuthHeaders(): HeadersInit {
+//   const token = getAuthToken();
+//   return token ? { Authorization: `Bearer ${token}` } : {};
+// }
 
 // Transform backend test set to frontend format
 function transformTestSet(backend: BackendTestSet): TestSet {
@@ -209,7 +209,7 @@ export const testsApi = {
     const url = level ? `/tests?level=${level}` : '/tests';
     const response = await request<TestsListResponse>(url, {
       method: 'GET',
-      headers: getAuthHeaders(),
+      // headers: getAuthHeaders(),
     });
 
     if (response.error || !response.data) {
@@ -232,7 +232,7 @@ export const testsApi = {
   } | null> => {
     const response = await request<TestStartResponse>(`/tests/${testSetId}/start`, {
       method: 'POST',
-      headers: getAuthHeaders(),
+      // headers: getAuthHeaders(),
     });
 
     if (response.error || !response.data) {
@@ -273,7 +273,7 @@ export const testsApi = {
     const response = await request<TestAnswerResponse>(`/tests/attempts/${attemptId}/answer`, {
       method: 'POST',
       headers: {
-        ...getAuthHeaders(),
+        // ...getAuthHeaders(),
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
@@ -306,7 +306,7 @@ export const testsApi = {
   } | null> => {
     const response = await request<TestSubmitResponse>(`/tests/attempts/${attemptId}/submit`, {
       method: 'POST',
-      headers: getAuthHeaders(),
+      // headers: getAuthHeaders(),
     });
 
     if (response.error || !response.data) {
@@ -340,7 +340,7 @@ export const testsApi = {
   results: async (attemptId: string): Promise<TestResultsResponse['attempt'] | null> => {
     const response = await request<TestResultsResponse>(`/tests/attempts/${attemptId}/results`, {
       method: 'GET',
-      headers: getAuthHeaders(),
+      // headers: getAuthHeaders(),
     });
 
     if (response.error || !response.data) {

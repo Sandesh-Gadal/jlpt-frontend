@@ -24,9 +24,8 @@ export default function Sidebar({
   userLevel,
 }: SidebarProps) {
   const pathname = usePathname();
-
-  const mainNav     = navItems.slice(0, 5);
-  const accountNav  = navItems.slice(5);
+  const mainNav     = navItems.slice(0, 3);
+  const accountNav  = navItems.slice(3);
 
   return (
     <aside className="sidebar">

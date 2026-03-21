@@ -40,9 +40,8 @@ export default function LoginPage() {
     setLoading(false);
 
     if (err) { setError(err); return; }
-    if (data?.token) {
-      localStorage.setItem('jlpt_token', data.token);
-      localStorage.setItem('jlpt_user',  JSON.stringify(data.user));
+    if (data?.user) {
+      // localStorage.setItem('jlpt_user',  JSON.stringify(data.user));
       router.push('/dashboard');
     }
   };
@@ -72,7 +71,7 @@ export default function LoginPage() {
           label="Email Address"
           type="email"
           placeholder="you@example.com"
-          autoComplete="email"
+          autoComplete="off"
           value={form.email}
           onChange={(e) => set('email', e.target.value)}
           onKeyDown={handleKeyDown}

@@ -1,9 +1,11 @@
 'use client';
 
-import React from 'react';
+import { useEffect } from 'react';
 import AppShell from '@/components/dashboard/Layout/AppShell';
+import ContentLoader from '@/components/ui/ContentLoader';
 import { useUserData } from '@/hooks/useUserData';
 import type { NavItem } from '@/types/dashboard';
+import { useRouter } from 'next/navigation';
 
 interface IndividualLayoutProps {
   children: React.ReactNode;
@@ -15,7 +17,7 @@ interface IndividualLayoutProps {
 const DEFAULT_INDIVIDUAL_NAV_ITEMS: NavItem[] = [
   { icon: 'home',     label: 'Home',      href: '/dashboard',   badge: null },
   { icon: 'courses',  label: 'Courses',   href: '/courses',     badge: '3'  },
-  { icon: 'practice', label: 'Practice',  href: '/practice',    badge: null },
+  // { icon: 'practice', label: 'Practice',  href: '/practice',    badge: null },
   { icon: 'tests',    label: 'Tests',     href: '/tests',       badge: null },
   { icon: 'cards',    label: 'Cards',     href: '/flashcards',  badge: null },
   { icon: 'progress', label: 'Progress',  href: '/progress',    badge: null },
@@ -30,35 +32,30 @@ export default function IndividualLayout({
   navItems = DEFAULT_INDIVIDUAL_NAV_ITEMS,
 }: IndividualLayoutProps) {
   const { fullName, jlptLevel, userInitial, loading, isAuthenticated } = useUserData();
-console.log('IndividualLayout - User Data:', { fullName, jlptLevel, userInitial, loading, isAuthenticated });
+  const router = useRouter();
+
+    useEffect(() => {
+    if (!loading && !isAuthenticated) {
+      router.replace('/auth/login');
+    }
+  }, [loading, isAuthenticated, router]);
+
   if (loading) {
-    return (
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          height: '100vh',
-          background: 'var(--bg-primary)',
-        }}
-      >
-        <div>Loading...</div>
-      </div>
-    );
+    return <ContentLoader />;
   }
 
-  if (!isAuthenticated) return null;
+  if (!isAuthenticated && !loading) return null;
 
   return (
     <AppShell
-      userName={fullName}
-      userInitial={userInitial}
-      userLevel={jlptLevel}
+      userName={fullName ?? ''}
+      userInitial={userInitial ?? ''}
+      userLevel={jlptLevel ?? ''}
       topBarSubText={topBarSubText}
       notifCount={notifCount}
       navItems={navItems}
     >
-      {children}
+      {loading ? <ContentLoader /> : children}
     </AppShell>
   );
 }

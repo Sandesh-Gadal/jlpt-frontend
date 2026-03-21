@@ -3,7 +3,7 @@
  * Handles dashboard-related API calls
  */
 
-import { request, getAuthToken } from './request';
+import { request} from './request';
 
 // Backend response types
 export interface BackendXpStats {
@@ -120,11 +120,11 @@ export interface UpcomingTest {
 }
 
 // Get auth headers
-function getAuthHeaders(): HeadersInit {
-  const token = getAuthToken();
-  console.log('Auth token for dashboard request:', token);
-  return token ? { Authorization: `Bearer ${token}` } : {};
-}
+// function getAuthHeaders(): HeadersInit {
+//   const token = getAuthToken();
+//   console.log('Auth token for dashboard request:', token);
+//   return token ? { Authorization: `Bearer ${token}` } : {};
+// }
 
 // Transform backend XP stats to frontend format
 function transformXpStats(backend: BackendXpStats, sparkline: number[]): UserStats {
@@ -221,7 +221,6 @@ export const dashboardApi = {
   } | null> => {
     const response = await request<DashboardResponse>('/dashboard', {
       method: 'GET',
-      headers: getAuthHeaders(),
       
     });
 

@@ -3,7 +3,7 @@
  * Handles course-related API calls
  */
 
-import { request, getAuthToken } from './request';
+import { request } from './request';
 
 // Backend response types
 export interface BackendJlptLevel {
@@ -248,10 +248,10 @@ function transformCourseDetail(backend: BackendCourseDetail): CourseDetailData {
 }
 
 // Get auth headers
-function getAuthHeaders(): HeadersInit {
-  const token = getAuthToken();
-  return token ? { Authorization: `Bearer ${token}` } : {};
-}
+// function getAuthHeaders(): HeadersInit {
+//   const token = getAuthToken();
+//   return token ? { Authorization: `Bearer ${token}` } : {};
+// }
 
 export const coursesApi = {
   /**

@@ -32,7 +32,7 @@ export interface MeResponse {
 }
 
 export interface LoginResponse {
-  token: string;
+  message: string;
   user: AuthUser;
 }
 
@@ -50,6 +50,14 @@ export interface ResetPasswordData {
   password_confirmation: string;
 }
 
+// ── Helper to call CSRF cookie ──────────────────────────────
+async function getCsrfCookie() {
+  await fetch('http://localhost:8000/sanctum/csrf-cookie', {
+    method: 'GET',
+    credentials: 'include',
+  });
+}
+
 export const authApi = {
   /**
    * POST /auth/register
@@ -63,28 +71,29 @@ export const authApi = {
   /**
    * POST /auth/login
    */
-  login: (body: { email: string; password: string }) =>
-    request<LoginResponse>('/auth/login', {
+  login: async (body: { email: string; password: string }) => {
+    await getCsrfCookie(); // Ensure CSRF cookie is set before login
+
+    return request<LoginResponse>('/auth/login', {
       method: 'POST',
       body: JSON.stringify(body),
-    }),
+    });
+  },
 
   /**
    * POST /auth/logout
    */
-  logout: (token: string) =>
+  logout: () =>
     request<{ message: string }>('/auth/logout', {
       method: 'POST',
-      headers: { Authorization: `Bearer ${token}` },
     }),
 
   /**
    * GET /auth/me
    */
-  me: (token: string) =>
+  me: () =>
     request<MeResponse>('/auth/me', {
       method: 'GET',
-      headers: { Authorization: `Bearer ${token}` },
     }),
 
   /**
@@ -108,10 +117,10 @@ export const authApi = {
   /**
    * POST /auth/resend-verification
    */
-  resendVerification: (token: string) =>
+  resendVerification: () =>
     request<{ message: string }>('/auth/resend-verification', {
       method: 'POST',
-      headers: { Authorization: `Bearer ${token}` },
+      
     }),
 };
 

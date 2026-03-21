@@ -12,7 +12,7 @@ export { lessonsApi } from './api/lessons';
 export { flashcardsApi } from './api/flashcards';
 export { testsApi } from './api/tests';
 export { dashboardApi, getUserInitials, formatJlptLevel } from './api/dashboard';
-export { request, getAuthToken, setAuthToken, removeAuthToken } from './api/request';
+export { request } from './api/request';
 export type { ApiResponse } from './api/request';
 
 // Combined API object for convenience (used in login page)

@@ -3,7 +3,7 @@
  * Handles lesson-related API calls
  */
 
-import { request, getAuthToken } from './request';
+import { request } from './request';
 import type { LessonData, ContentBlock, QuizQuestion } from '@/types/lesson';
 
 // Backend response types
@@ -52,10 +52,10 @@ export interface LessonDetailData {
 }
 
 // Get auth headers
-function getAuthHeaders(): HeadersInit {
-  const token = getAuthToken();
-  return token ? { Authorization: `Bearer ${token}` } : {};
-}
+// function getAuthHeaders(): HeadersInit {
+//   const token = getAuthToken();
+//   return token ? { Authorization: `Bearer ${token}` } : {};
+// }
 
 // Transform backend lesson to frontend lesson format
 function transformLesson(backend: BackendLessonContent, totalInCourse: number = 0): LessonDetailData {
@@ -92,7 +92,7 @@ export const lessonsApi = {
   get: async (id: string, totalInCourse: number = 0): Promise<LessonDetailData | null> => {
     const response = await request<LessonResponse>(`/lessons/${id}`, {
       method: 'GET',
-      headers: getAuthHeaders(),
+      // headers: getAuthHeaders(),
     });
 
     if (response.error || !response.data) {
@@ -110,7 +110,7 @@ export const lessonsApi = {
   complete: async (id: string): Promise<LessonCompleteResponse | null> => {
     const response = await request<LessonCompleteResponse>(`/lessons/${id}/complete`, {
       method: 'POST',
-      headers: getAuthHeaders(),
+      // headers: getAuthHeaders(),
     });
 
     if (response.error || !response.data) {

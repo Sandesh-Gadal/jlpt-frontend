@@ -3,7 +3,7 @@
  * Handles flashcard-related API calls
  */
 
-import { request, getAuthToken } from './request';
+import { request} from './request';
 
 // Backend response types
 export interface FlashcardReview {
@@ -77,10 +77,10 @@ export interface FlashcardStats {
 }
 
 // Get auth headers
-function getAuthHeaders(): HeadersInit {
-  const token = getAuthToken();
-  return token ? { Authorization: `Bearer ${token}` } : {};
-}
+// function getAuthHeaders(): HeadersInit {
+//   const token = getAuthToken();
+//   return token ? { Authorization: `Bearer ${token}` } : {};
+// }
 
 // Transform backend flashcard to frontend format
 function transformFlashcard(backend: BackendFlashcard): Flashcard {
@@ -111,7 +111,7 @@ export const flashcardsApi = {
     const url = `/flashcards${params.toString() ? `?${params.toString()}` : ''}`;
     const response = await request<FlashcardsResponse>(url, {
       method: 'GET',
-      headers: getAuthHeaders(),
+      // headers: getAuthHeaders(),
     });
 
     if (response.error || !response.data) {
@@ -136,7 +136,7 @@ export const flashcardsApi = {
     const url = `/flashcards/due?${params.toString()}`;
     const response = await request<FlashcardsDueResponse>(url, {
       method: 'GET',
-      headers: getAuthHeaders(),
+      // headers: getAuthHeaders(),
     });
 
     if (response.error || !response.data) {
@@ -155,7 +155,7 @@ export const flashcardsApi = {
     const response = await request<FlashcardRateResponse>(`/flashcards/${id}/rate`, {
       method: 'POST',
       headers: {
-        ...getAuthHeaders(),
+        // ...getAuthHeaders(),
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ rating }),

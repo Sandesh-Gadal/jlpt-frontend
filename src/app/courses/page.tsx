@@ -2,7 +2,7 @@
 
 // src/app/courses/page.tsx
 
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect , useRef} from 'react';
 import AppShell      from '@/components/dashboard/Layout/AppShell';
 import FiltersBar    from '@/components/courses/FilterBar';
 import ResultsHeader from '@/components/courses/ResultsHeader';
@@ -26,14 +26,19 @@ export default function CourseCatalogPage() {
   
   // Use the shared hook for user data
   const { fullName, jlptLevel, userInitial, loading: userLoading } = useUserData();
+  const hasFetched = useRef(false);
+
 
   // Fetch courses from API on mount
   useEffect(() => {
+      if (hasFetched.current) return;
+      hasFetched.current = true;
+      
     const fetchCourses = async () => {
-      setLoading(false);
+      setLoading(true);
       try {
         const data = await coursesApi.list();
-        if (data && data.length > 0) {
+        if (data.length > 0) {
           setCourses(data);
         } else {
         
@@ -51,6 +56,7 @@ export default function CourseCatalogPage() {
     fetchCourses();
   }, []);
 
+  
   const withLoading = (fn: () => void) => {
     setLoading(true);
     fn();
