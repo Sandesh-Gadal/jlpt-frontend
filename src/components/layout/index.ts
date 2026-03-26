@@ -3,4 +3,4 @@
 
 export { default as IndividualLayout } from './IndividualLayout';
 export { default as InstitutionLayout } from './InstitutionLayout';
-
+export { default as LanguageSwitcher } from './LanguageSwitcher';

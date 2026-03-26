@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import AppShell from '@/components/dashboard/Layout/AppShell';
 import ContentLoader from '@/components/ui/ContentLoader';
 import { useUserData } from '@/hooks/useUserData';
@@ -17,7 +17,6 @@ interface IndividualLayoutProps {
 const DEFAULT_INDIVIDUAL_NAV_ITEMS: NavItem[] = [
   { icon: 'home',     label: 'Home',      href: '/dashboard',   badge: null },
   { icon: 'courses',  label: 'Courses',   href: '/courses',     badge: '3'  },
-  // { icon: 'practice', label: 'Practice',  href: '/practice',    badge: null },
   { icon: 'tests',    label: 'Tests',     href: '/tests',       badge: null },
   { icon: 'cards',    label: 'Cards',     href: '/flashcards',  badge: null },
   { icon: 'progress', label: 'Progress',  href: '/progress',    badge: null },
@@ -33,18 +32,24 @@ export default function IndividualLayout({
 }: IndividualLayoutProps) {
   const { fullName, jlptLevel, userInitial, loading, isAuthenticated } = useUserData();
   const router = useRouter();
+  const [mounted, setMounted] = useState(false);
 
-    useEffect(() => {
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
     if (!loading && !isAuthenticated) {
       router.replace('/auth/login');
     }
   }, [loading, isAuthenticated, router]);
 
-  if (loading) {
+  // Don't render anything until client is mounted to avoid hydration mismatch
+  if (!mounted || loading) {
     return <ContentLoader />;
   }
 
-  if (!isAuthenticated && !loading) return null;
+  if (!isAuthenticated) return null;
 
   return (
     <AppShell
@@ -55,7 +60,7 @@ export default function IndividualLayout({
       notifCount={notifCount}
       navItems={navItems}
     >
-      {loading ? <ContentLoader /> : children}
+      {children}
     </AppShell>
   );
 }
