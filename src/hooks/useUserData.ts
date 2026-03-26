@@ -1,6 +1,6 @@
 'use client';
 
-import { useUserContext } from '@/app/context/UserDataContext';
+import { useUserContext } from '@/app/[locale]/context/UserDataContext';
 
 export function useUserData() {
   const { user, loading, isAuthenticated, refetch } = useUserContext();

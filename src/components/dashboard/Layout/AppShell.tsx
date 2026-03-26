@@ -1,11 +1,12 @@
 "use client";
 // src/components/dashboard/Layout/AppShell.tsx
-// Minimalistic app shell with sidebar and topbar
 
-import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import type { NavItem } from '@/types/dashboard';
+import React, { useState, useEffect } from 'react';
+import LanguageSwitcher from '@/components/layout/LanguageSwitcher';
+import { useTranslations } from 'next-intl';
 
 // SVG Icon Components
 const HomeIcon = ({ className }: { className?: string }) => (
@@ -40,11 +41,8 @@ const RectangleStackIcon = ({ className }: { className?: string }) => (
 
 const ChartBarIcon = ({ className }: { className?: string }) => (
   <svg className={className} width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-<path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      d="M3 13.125c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zm6.75-4.5c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25A1.125 1.125 0 019.75 19.875V8.625zm6.75-4.5c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"
-    />  </svg>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M3 13.125c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zm6.75-4.5c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25A1.125 1.125 0 019.75 19.875V8.625zm6.75-4.5c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
+  </svg>
 );
 
 const TrophyIcon = ({ className }: { className?: string }) => (
@@ -59,38 +57,35 @@ const UserIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-// Icon mapping component
 const NavIcon = ({ icon, className }: { icon: string; className?: string }) => {
   const iconMap: Record<string, React.ReactNode> = {
-    'home': <HomeIcon className={className} />,
-    'courses': <BookOpenIcon className={className} />,
+    'home':     <HomeIcon className={className} />,
+    'courses':  <BookOpenIcon className={className} />,
     'practice': <PencilSquareIcon className={className} />,
-    'tests': <ClipboardDocumentIcon className={className} />,
-    'cards': <RectangleStackIcon className={className} />,
+    'tests':    <ClipboardDocumentIcon className={className} />,
+    'cards':    <RectangleStackIcon className={className} />,
     'progress': <ChartBarIcon className={className} />,
-    'ranking': <TrophyIcon className={className} />,
-    'profile': <UserIcon className={className} />,
+    'ranking':  <TrophyIcon className={className} />,
+    'profile':  <UserIcon className={className} />,
   };
   return <>{iconMap[icon] || icon}</>;
 };
 
-// Default navigation items for individual users
 const DEFAULT_NAV_ITEMS: NavItem[] = [
-  { icon: 'home',     label: 'Home',      href: '/dashboard',  badge: null },
-  { icon: 'courses',  label: 'Courses',   href: '/courses',    badge: '3'  },
-  { icon: 'practice', label: 'Practice',  href: '/practice',  badge: null },
-  { icon: 'tests',    label: 'Tests',     href: '/tests',      badge: null },
-  { icon: 'cards',    label: 'Cards',     href: '/flashcards', badge: null },
-  { icon: 'progress', label: 'Progress',  href: '/progress',   badge: null },
-  { icon: 'ranking',  label: 'Ranking',   href: '/leaderboard',badge: null },
-  { icon: 'profile',  label: 'Profile',   href: '/profile',    badge: null },
+  { icon: 'home',     label: 'Home',      href: '/dashboard',   badge: null },
+  { icon: 'courses',  label: 'Courses',   href: '/courses',     badge: '3'  },
+  { icon: 'practice', label: 'Practice',  href: '/practice',    badge: null },
+  { icon: 'tests',    label: 'Tests',     href: '/tests',       badge: null },
+  { icon: 'cards',    label: 'Cards',     href: '/flashcards',  badge: null },
+  { icon: 'progress', label: 'Progress',  href: '/progress',    badge: null },
+  { icon: 'ranking',  label: 'Ranking',   href: '/leaderboard', badge: null },
+  { icon: 'profile',  label: 'Profile',   href: '/profile',     badge: null },
 ];
 
-// Bottom navigation items for mobile
 const BOTTOM_NAV_ITEMS: NavItem[] = [
   { icon: 'home',     label: 'Home',      href: '/dashboard',  badge: null },
   { icon: 'courses',  label: 'Courses',   href: '/courses',    badge: '3'  },
-  { icon: 'practice', label: 'Practice',  href: '/practice',  badge: null },
+  { icon: 'practice', label: 'Practice',  href: '/practice',   badge: null },
   { icon: 'progress', label: 'Progress',  href: '/progress',   badge: null },
   { icon: 'profile',  label: 'Profile',   href: '/profile',    badge: null },
 ];
@@ -102,7 +97,7 @@ interface AppShellProps {
   userLevel:      string;
   topBarSubText?: string;
   notifCount?:    number;
-  navItems?:      NavItem[]; // Custom navigation items
+  navItems?:      NavItem[];
 }
 
 export default function AppShell({
@@ -115,15 +110,25 @@ export default function AppShell({
   navItems = DEFAULT_NAV_ITEMS,
 }: AppShellProps) {
   const pathname = usePathname();
-  
-  const hour = new Date().getHours();
-  const greeting =
-    hour < 12 ? 'Good morning' :
-    hour < 17 ? 'Good afternoon' :
-    'Good evening';
+  const t = useTranslations('nav');
 
-  // Use passed navItems or default
-  const displayNavItems = navItems || DEFAULT_NAV_ITEMS;
+  const [greeting, setGreeting] = useState('Good morning');
+
+  useEffect(() => {
+    const hour = new Date().getHours();
+    setGreeting(
+      hour < 12 ? 'Good morning' :
+      hour < 17 ? 'Good afternoon' :
+      'Good evening'
+    );
+  }, []);
+
+  // Map nav items with translated labels using icon key as translation key
+  const displayNavItems = (navItems || DEFAULT_NAV_ITEMS).map((item) => ({
+    ...item,
+    label: t(item.icon),
+  }));
+
   const mainNav    = displayNavItems.slice(0, 4);
   const accountNav = displayNavItems.slice(4);
 
@@ -144,14 +149,14 @@ export default function AppShell({
 
         {/* Nav links */}
         <nav className="sidebar-nav">
-          <div className="nav-section-label">Menu</div>
+          <div className="nav-section-label">{t('menu')}</div>
           {mainNav.map((item) => {
             const isActive =
               pathname === item.href ||
               (item.href !== '/dashboard' && pathname.startsWith(item.href));
             return (
               <Link
-                key={item.label}
+                key={item.icon}
                 href={item.href}
                 className={`nav-item${isActive ? ' active' : ''}`}
                 aria-current={isActive ? 'page' : undefined}
@@ -163,13 +168,14 @@ export default function AppShell({
             );
           })}
 
-          <div className="nav-section-label" style={{ marginTop: 8 }}>Account</div>
+          <div className="nav-section-label" style={{ marginTop: 8 }}>{t('account')}</div>
           {accountNav.map((item) => {
-            const isActive = pathname === item.href ||
+            const isActive =
+              pathname === item.href ||
               pathname.startsWith(item.href);
             return (
               <Link
-                key={item.label}
+                key={item.icon}
                 href={item.href}
                 className={`nav-item${isActive ? ' active' : ''}`}
                 aria-current={isActive ? 'page' : undefined}
@@ -208,6 +214,8 @@ export default function AppShell({
           </div>
 
           <div className="topbar-actions">
+            <LanguageSwitcher />
+
             {/* Search */}
             <button className="icon-btn" title="Search">
               <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
@@ -245,7 +253,7 @@ export default function AppShell({
             (item.href !== '/dashboard' && pathname.startsWith(item.href));
           return (
             <Link
-              key={item.label}
+              key={item.icon}
               href={item.href}
               className={`bottom-nav-item${isActive ? ' active' : ''}`}
               aria-current={isActive ? 'page' : undefined}
@@ -256,7 +264,7 @@ export default function AppShell({
                   <span className="bottom-nav-badge">{item.badge}</span>
                 )}
               </span>
-              <span className="bottom-nav-label">{item.label}</span>
+              <span className="bottom-nav-label">{t(item.icon)}</span>
             </Link>
           );
         })}
@@ -265,4 +273,3 @@ export default function AppShell({
     </div>
   );
 }
-
