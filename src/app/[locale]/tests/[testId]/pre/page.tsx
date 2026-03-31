@@ -47,15 +47,16 @@ export default function PreTestPage({ params }: { params: Promise<{ testId: stri
   };
 
   return (
-    <AppShell
-      userName="Keiko Tanaka"
-      userInitial="K"
-      userLevel="N3"
-      topBarSubText="Test overview · Review before starting"
-      notifCount={3}
-    >
+    // <AppShell
+    //   userName="Keiko Tanaka"
+    //   userInitial="K"
+    //   userLevel="N3"
+    //   topBarSubText="Test overview · Review before starting"
+    //   notifCount={3}
+    // >
+    <>
       <div className="dashboard-content" style={{ overflowY: 'auto' }}>
-        <div className="pt-shell">
+        <div className="">
 
           {/* Back */}
           <Link href="/tests" className="pt-back-btn">
@@ -212,6 +213,7 @@ export default function PreTestPage({ params }: { params: Promise<{ testId: stri
 
         </div>
       </div>
-    </AppShell>
+    {/* </AppShell> */}
+    </>
   );
 }
