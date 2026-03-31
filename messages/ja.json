@@ -1,0 +1,19 @@
+{
+  "nav": {
+    "home": "ホーム",
+    "courses": "コース",
+    "practice": "練習",
+    "tests": "テスト",
+    "cards": "カード",
+    "progress": "進捗",
+    "ranking": "ランキング",
+    "profile": "プロフィール",
+    "menu": "メニュー",
+    "account": "アカウント"
+  },
+  "quiz": {
+    "next": "次の問題",
+    "submit": "提出する",
+    "score": "スコア：{score}/{total}"
+  }
+}

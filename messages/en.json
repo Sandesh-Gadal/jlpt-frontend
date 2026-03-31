@@ -1,0 +1,20 @@
+{
+  "nav": {
+      "home": "Home",
+      "courses": "Courses",
+      "practice": "Practice",
+      "tests": "Tests",
+      "cards": "Cards",
+      "progress": "Progress",
+      "ranking": "Ranking",
+      "profile": "Profile",
+      "menu": "Menu",
+      "account": "Account"
+  },
+  "quiz": {
+    "next": "Next Question",
+    "submit": "Submit",
+    "score": "Your score: {score}/{total}"
+  }
+   
+}

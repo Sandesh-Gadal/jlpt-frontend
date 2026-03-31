@@ -536,4 +536,8 @@
   cursor: pointer;
   transition: background 0.18s;
 }
-.empty-reset-btn:hover { background: var(--highlight-md); }
+.empty-reset-btn:hover { background: var(--highlight-md);}
+
+
+
+

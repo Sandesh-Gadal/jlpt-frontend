@@ -54,13 +54,14 @@ export default function CourseDetailPage() {
   const displayCourse = course || COURSE_DETAIL;
 
   return (
-    <AppShell
-      userName={fullName}
-      userInitial={userInitial}
-      userLevel={jlptLevel}
-      topBarSubText={displayCourse.title}
-      notifCount={0}
-    >
+    // <AppShell
+    //   userName={fullName}
+    //   userInitial={userInitial}
+    //   userLevel={jlptLevel}
+    //   topBarSubText={displayCourse.title}
+    //   notifCount={0}
+    // >
+    <>
       {/* Full-height flex layout within main-area */}
       <div style={{ display: 'flex', flexDirection: 'column', flex: 1, overflow: 'hidden' }}>
 
@@ -118,7 +119,8 @@ export default function CourseDetailPage() {
 
         </div>
       </div>
-    </AppShell>
+    {/* // </AppShell> */}
+    </>
   );
 }
 
