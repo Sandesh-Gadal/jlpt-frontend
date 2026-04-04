@@ -2,6 +2,7 @@
 
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { testsApi, type SubmitOrResultsResponse } from '@/lib/api/tests';
 
 type ReviewFilter = 'all' | 'correct' | 'wrong' | 'flagged';
@@ -25,8 +26,9 @@ function formatTime(seconds: number): string {
   return `${m}m ${s}s`;
 }
 
-export default function TestResultsPage({ params }: { params: Promise<{ attemptId: string }> }) {
-  const { attemptId } = React.use(params);
+export default function TestResultsPage() {
+   const searchParams = useSearchParams();
+  const attemptId = searchParams.get('attemptId') ?? ''; 
 
   const [result, setResult] = useState<SubmitOrResultsResponse | null>(null);
   const [reviewFilter, setReviewFilter] = useState<ReviewFilter>('all');

@@ -77,7 +77,7 @@ export default function TestInterfacePage({ params }: { params: Promise<{ testId
 
         const queryAttemptId = searchParams.get('attemptId');
         if (queryAttemptId !== res.attempt.id) {
-          router.replace(`/tests/${testId}?attemptId=${res.attempt.id}`);
+          router.replace(`/tests/${testId}/results?attemptId=${res.attempt.id}`);
         }
       } catch (err) {
         console.error(err);
@@ -216,13 +216,13 @@ export default function TestInterfacePage({ params }: { params: Promise<{ testId
       setSubmitting(true);
       await flushCurrentQuestionTime();
       const result = await testsApi.submit(attemptId);
-      router.push(`/tests/results/${result.attempt.id}`);
+      router.push(`/tests/${testId}/results?attemptId=${result.attempt.id}`);
     } catch (error) {
       console.error(error);
     } finally {
       setSubmitting(false);
     }
-  }, [attemptId, flushCurrentQuestionTime, router, submitting]);
+  }, [attemptId, flushCurrentQuestionTime, router, submitting , testId]);
 
   const sectionGroups = useMemo(() => {
     if (!test) return [];

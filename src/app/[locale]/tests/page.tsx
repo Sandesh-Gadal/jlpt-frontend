@@ -35,6 +35,7 @@ export default function TestCatalogPage() {
       try {
         setLoading(true);
         const data = await testsApi.list(level);
+        console.log('Loaded tests:', data);
         if (mounted) {
           setTests(data);
           setError(null);

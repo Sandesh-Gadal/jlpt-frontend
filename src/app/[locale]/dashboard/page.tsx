@@ -61,9 +61,12 @@ export default function DashboardPage() {
     // Guard — only run once per mount
     if (hasFetched.current) return;
     hasFetched.current = true;
+ console.log('DashboardPage mounted, fetching data...');
 
+    // Redirect to login if not authenticated
     
     if (!isAuthenticated && !loading) {
+      console.log('User not authenticated, redirecting to login');
       router.push('/auth/login');
       return;
     }
